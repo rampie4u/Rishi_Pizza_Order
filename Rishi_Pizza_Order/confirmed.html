@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<title></title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<link rel="icon" href="demo_icon.gif" type="image/gif" sizes="16x16">
+	<link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="material-icons/css/materialdesignicons.min.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/responsive.css">
+
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+
+</head>
+<body>
+
+	
+
+<div class="container mt-4 mb-4">
+	<div class="card">
+		<div class="card-header text-center"><h4>Order Confirmed</h4></div>
+		<div class="card-body">
+			<table class="table table-striped">
+				<tbody>
+					<tr>
+						<th>Pizza Size</th>
+						<td><span id="pSize"></span></td>
+					</tr>
+					<tr>
+						<th>Pizza Flavour</th>
+						<td><span id="pFlavour"></span></td>
+					</tr>
+					<tr>
+						<th>Toppings Added</th>
+						<td><span id="pTopping"></span></td>
+					</tr>
+					<tr>
+						<th>Total Cost</th>
+						<td><span id="pCost"></span></td>
+					</tr>
+				</tbody>
+			</table>
+			<h3 class="text-center text-info mt-5">Estimated Time for Delivery - 30 Minutes</h3>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		var retrievedFinalObject = localStorage.getItem('finalObject');
+		var finalObj = JSON.parse(retrievedFinalObject);
+		$("#pSize").text(finalObj.finalSize);
+		$("#pFlavour").text(finalObj.finalFlavour);
+		$("#pTopping").text(finalObj.finalToppings);
+		$("#pCost").text(finalObj.finalCost);
+	});
+</script>
+
+
+
+	<script type="text/javascript" src="js/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+	<script type="text/javascript" src="js/theme.js"></script>
+	<script type="text/javascript">
+		$('.my-select').selectpicker();
+	</script>
+
+</body>
+</html>

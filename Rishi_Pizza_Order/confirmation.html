@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<title></title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<link rel="icon" href="demo_icon.gif" type="image/gif" sizes="16x16">
+	<link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="material-icons/css/materialdesignicons.min.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/responsive.css">
+
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+
+</head>
+<body>
+
+	
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+
+
+<div class="container mt-4 mb-4">
+	<form action="confirmed.html" id="confForm">
+		<div class="card">
+			<div class="card-header">Confirmation</div>
+			<div class="card-body">
+				<table class="table table-bordered">
+					<tbody>
+						<tr>
+							<th>Pizza Size</th>
+							<td>
+								<select class="form-control" id="pizzaSize">
+									<option value="Small">Small</option>
+									<option value="Medium">Medium</option>
+									<option value="Large">Large</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>Pizza Flavour</th>
+							<td>
+								<select class="form-control" id="pizzaFlavour">
+									<option>Chicken Fajita</option>
+									<option>Chicken Pepperoni</option>
+									<option>Chicken Teriyaki</option>
+									<option>Chef Special</option>
+									<option>Smoked Chicken</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>Toppings</th>
+							<td>
+								<select class="form-control selectpicker my-select" multiple="multiple" id="pizzaToppings">
+									<option value="Mushrooms">Mushrooms</option>
+									<option value="Onion">Onion</option>
+									<option value="Black Olives">Black Olives</option>
+									<option value="Jalapeno">Jalapeno</option>
+									<option value="Tomato">Tomato</option>
+								</select>
+								<input type="hidden" id="newValue" name="">
+							</td>
+						</tr>
+						<tr>
+							<th>Total Cost</th>
+							<td>
+								<input type="text"  disabled class="form-control" name="" id="totalCost" required>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="card-footer text-center"><button class="btn btn-success">Save & Next</button></div>
+		</div>
+	</form>
+</div>
+
+<script type="text/javascript">
+
+	var count = 0;
+
+	$(document).ready(function () {
+		var retrievedObject = localStorage.getItem('testObject');
+		var obj = JSON.parse(retrievedObject);
+		$("#totalCost").val(obj.maxPrice);
+		console.log(obj.size);
+		$("#pizzaSize").val(obj.size);
+		$("#pizzaFlavour").val(obj.flavour);
+		$("#pizzaToppings").val(obj.toppings);
+		$('.selectpicker').selectpicker('render');
+		count = $("#pizzaToppings :selected").length;
+	});
+
+
+	$("#pizzaToppings").change(function () {
+		var newCount = $("#pizzaToppings :selected").length;
+		var tempCost = $("#totalCost").val();
+		if (newCount>count) {
+			$("#totalCost").val(+tempCost + 5);
+			count++;
+		} else {
+			$("#totalCost").val(tempCost - 5);
+			count--;
+		}
+	});
+
+	$("#pizzaToppings").change(function ()
+	{
+		
+	});
+
+
+	$("#pizzaSize").change(function () 
+	{
+		pizaPrice = 0;
+		pizzaSize = $(this).val();
+		if (pizzaSize == "Small")
+		{
+			pizaPrice = 50;
+		}else if (pizzaSize == "Medium")
+		{
+			pizaPrice = 100;
+		}else if (pizzaSize == "Large")
+		{
+			pizaPrice = 150;
+		}
+		pizzaFlavour = 15;
+		toppings = $('#pizzaToppings').val();
+		toppingValue = 0;
+		if (toppings.length)
+		{
+			toppingValue = 5 * toppings.length;
+		}
+		sum = pizaPrice + pizzaFlavour + toppingValue;
+
+		$('#totalCost').val(sum);
+	});
+
+
+	$("#confForm").submit(function () {
+
+		var finalSize = $("#pizzaSize").val();
+		var finalFlavour = $("#pizzaFlavour").val();
+		var finalToppings = $("#pizzaToppings").val();
+		var finalCost = '$' +  $("#totalCost").val();
+
+		var finalObject = { 'finalSize': finalSize, 'finalFlavour': finalFlavour, 'finalToppings': finalToppings, 'finalCost': finalCost };
+		localStorage.setItem('finalObject', JSON.stringify(finalObject));
+	});
+</script>
+
+
+
+	<script type="text/javascript" src="js/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+	<script type="text/javascript" src="js/theme.js"></script>
+	<script type="text/javascript">
+		$('.my-select').selectpicker();
+	</script>
+
+</body>
+</html>
